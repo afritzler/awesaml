@@ -1,5 +1,9 @@
 # AweSAML
 
+> "You said all I need is configuring my IDP to enable SSO!!!"
+
+![saml](images/logo.png)
+
 ## Installation
 
 ```shell script
