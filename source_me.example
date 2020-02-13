@@ -1,0 +1,10 @@
+export ENTITY_ID="myEntityID"
+export SERVICE_URL="http://localhost:8000"
+export SERVICE_PORT="8000" # 8000 is the default
+export CONTENT_DIR="public/"
+export IDP_METADATA_URL="http://myAwesomeIDP/saml2/metadata"
+export CERT_FILE="myservice.cert"
+export KEY_FILE="myservice.key"
+# optional: if GCP Secret Manager is used instead of local files
+#export CERT_SECRET_NAME="NAME_OF_MY_CERT_SECRET"
+#export KEY_SECRET_NAME="NAME_OF_MY_KEY_SECRET"

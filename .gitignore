@@ -13,3 +13,10 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+main
+*.key
+*.cert
+public/
+.idea/
+source_me

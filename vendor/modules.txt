@@ -1,0 +1,21 @@
+# github.com/beevik/etree v1.1.0
+github.com/beevik/etree
+# github.com/crewjam/httperr v0.0.0-20190612203328-a946449404da
+github.com/crewjam/httperr
+# github.com/crewjam/saml v0.4.0
+github.com/crewjam/saml
+github.com/crewjam/saml/logger
+github.com/crewjam/saml/samlsp
+github.com/crewjam/saml/xmlenc
+# github.com/dgrijalva/jwt-go v3.2.0+incompatible
+github.com/dgrijalva/jwt-go
+# github.com/jonboulle/clockwork v0.1.0
+github.com/jonboulle/clockwork
+# github.com/pkg/errors v0.8.1
+github.com/pkg/errors
+# github.com/russellhaering/goxmldsig v0.0.0-20180430223755-7acd5e4a6ef7
+github.com/russellhaering/goxmldsig
+github.com/russellhaering/goxmldsig/etreeutils
+github.com/russellhaering/goxmldsig/types
+# golang.org/x/crypto v0.0.0-20190923035154-9ee001bba392
+golang.org/x/crypto/ripemd160
