@@ -20,4 +20,5 @@ awesaml*
 *.cert
 public/
 .idea/
+.vscode/
 source_me
