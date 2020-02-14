@@ -4,7 +4,7 @@ cloud.google.com/go/iam
 cloud.google.com/go/secretmanager/apiv1beta1
 # github.com/beevik/etree v1.1.0
 github.com/beevik/etree
-# github.com/crewjam/httperr v0.0.0-20190612203328-a946449404da
+# github.com/crewjam/httperr v0.1.0
 github.com/crewjam/httperr
 # github.com/crewjam/saml v0.4.0
 github.com/crewjam/saml
@@ -33,7 +33,7 @@ github.com/google/go-cmp/cmp/internal/value
 github.com/googleapis/gax-go/v2
 # github.com/jonboulle/clockwork v0.1.0
 github.com/jonboulle/clockwork
-# github.com/pkg/errors v0.8.1
+# github.com/pkg/errors v0.9.1
 github.com/pkg/errors
 # github.com/russellhaering/goxmldsig v0.0.0-20180430223755-7acd5e4a6ef7
 github.com/russellhaering/goxmldsig
@@ -55,7 +55,7 @@ go.opencensus.io/trace
 go.opencensus.io/trace/internal
 go.opencensus.io/trace/propagation
 go.opencensus.io/trace/tracestate
-# golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550
+# golang.org/x/crypto v0.0.0-20200214034016-1d94cc7ab1c6
 golang.org/x/crypto/ripemd160
 # golang.org/x/net v0.0.0-20200202094626-16171245cfb2
 golang.org/x/net/context
