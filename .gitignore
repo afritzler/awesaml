@@ -15,6 +15,7 @@
 # vendor/
 
 main
+awesaml*
 *.key
 *.cert
 public/
