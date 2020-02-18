@@ -4,7 +4,7 @@ const (
 	DefaultServingPort    = "8000"
 	EntityIDEnvName       = "ENTITY_ID"
 	ServiceURLEnvName     = "SERVICE_URL"
-	ServingPortEnvName    = "SERVICE_PORT"
+	ServingPortEnvName    = "PORT"
 	ContentDirEnvName     = "CONTENT_DIR"
 	IdpMetaDataURLEnvName = "IDP_METADATA_URL"
 	CertFileEnvName       = "CERT_FILE"
