@@ -10,7 +10,7 @@
 
 ## Installation
 
-The easiest way to install AweSAML is to `go get` it into your Go bin path.
+The easiest way to install AweSAML is to `go get` it into your Go bin `PATH`.
 
 ```shell script
 go get -u github.com/afritzler/awesaml

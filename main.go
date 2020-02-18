@@ -6,11 +6,12 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"github.com/afritzler/awesaml/pkg/types"
 	"log"
 	"net/http"
 	"net/url"
 	"os"
+
+	"github.com/afritzler/awesaml/pkg/types"
 
 	secretmanager "cloud.google.com/go/secretmanager/apiv1beta1"
 	"github.com/crewjam/saml/samlsp"
@@ -41,7 +42,7 @@ func main() {
 		log.Println("using cert/key from secret manager")
 		certBytes, err := getSecret(certSecretName)
 		if err != nil {
-			log.Fatalf("failed to cert secret from secret manager: %+v", err)
+			log.Fatalf("failed to get secret from secret manager: %+v", err)
 			os.Exit(1)
 		}
 		keyBytes, err := getSecret(keySecretName)
