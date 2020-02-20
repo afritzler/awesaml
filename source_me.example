@@ -6,5 +6,6 @@ export IDP_METADATA_URL="http://myAwesomeIDP/saml2/metadata"
 export CERT_FILE="myservice.cert"
 export KEY_FILE="myservice.key"
 # optional: if GCP Secret Manager is used instead of local files
+# "projects/my-project/secrets/my-secret/versions/latest"
 #export CERT_SECRET_NAME="NAME_OF_MY_CERT_SECRET"
 #export KEY_SECRET_NAME="NAME_OF_MY_KEY_SECRET"
