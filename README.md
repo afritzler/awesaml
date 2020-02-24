@@ -73,4 +73,7 @@ You should now be able to access your SAML SSO secured web content here <http://
 
 # Acknowledgements
 
-AweSAML uses under the hood the great [crewjam/saml](https://github.com/crewjam/saml) module for the heavy lifting of the SAML flow.
+AweSAML is build on the shoulders of giatns and leverages the following modules under the hood
+
+* [crewjam/saml](https://github.com/crewjam/saml) module for the heavy lifting of the SAML flow
+* [fasthttp](https://github.com/valyala/fasthttp) as a possible alternative to `net/http`
