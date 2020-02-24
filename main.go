@@ -5,7 +5,6 @@ import (
 	"crypto/rsa"
 	"crypto/tls"
 	"crypto/x509"
-	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -28,8 +27,7 @@ var (
 	idpMetaDataURL,
 	contentDir,
 	servingPort string
-	fastHTTP bool
-	keyPair  tls.Certificate
+	keyPair tls.Certificate
 )
 
 func main() {
@@ -113,9 +111,6 @@ func initVars() error {
 	if len(servingPort) == 0 {
 		servingPort = types.DefaultServingPort
 	}
-	// Check wether to use fastHTTP instead of net/http
-	flag.BoolVar(&fastHTTP, "fasthttp", false, "use fasthttp instead of net/http")
-	flag.Parse()
 	return nil
 }
 
