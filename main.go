@@ -5,6 +5,7 @@ import (
 	"crypto/rsa"
 	"crypto/tls"
 	"crypto/x509"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -12,6 +13,8 @@ import (
 	"os"
 
 	"github.com/afritzler/awesaml/pkg/types"
+	"github.com/valyala/fasthttp"
+	"github.com/valyala/fasthttp/fasthttpadaptor"
 
 	secretmanager "cloud.google.com/go/secretmanager/apiv1beta1"
 	"github.com/crewjam/saml/samlsp"
@@ -28,6 +31,8 @@ var (
 	idpMetaDataURL,
 	contentDir,
 	servingPort string
+	fastHTTP bool
+	keyPair  tls.Certificate
 )
 
 func main() {
@@ -36,44 +41,7 @@ func main() {
 		log.Fatalf("failed to initialize vars %+v", err)
 		os.Exit(1)
 	}
-
-	var keyPair tls.Certificate
-	if len(certSecretName) > 0 && len(keySecretName) > 0 {
-		log.Println("using cert/key from secret manager")
-		certBytes, err := getSecret(certSecretName)
-		if err != nil {
-			log.Fatalf("failed to get secret from secret manager: %+v", err)
-			os.Exit(1)
-		}
-		keyBytes, err := getSecret(keySecretName)
-		if err != nil {
-			log.Fatalf("failed to get key secret from secret manager: %+v", err)
-			os.Exit(1)
-		}
-		keyPair, err = tls.X509KeyPair(certBytes, keyBytes)
-		if err != nil {
-			log.Fatalf("failed to load key pair: %+v", err)
-			os.Exit(1)
-		}
-		keyPair.Leaf, err = x509.ParseCertificate(keyPair.Certificate[0])
-		if err != nil {
-			log.Fatalf("failed to parse certificate: %+v", err)
-			os.Exit(1)
-		}
-	} else {
-		log.Println("using cert/key from disk")
-		var err error
-		keyPair, err = tls.LoadX509KeyPair(certFile, keyFile)
-		if err != nil {
-			log.Fatalf("failed to load key pair: %+v", err)
-			os.Exit(1)
-		}
-		keyPair.Leaf, err = x509.ParseCertificate(keyPair.Certificate[0])
-		if err != nil {
-			log.Fatalf("failed to parse certificate: %+v", err)
-			os.Exit(1)
-		}
-	}
+	setVarsOrFail()
 
 	rootURL, _ := url.Parse(serviceURL)
 	idpMetadataURL, _ := url.Parse(idpMetaDataURL)
@@ -100,16 +68,24 @@ func main() {
 		os.Exit(1)
 	}
 
-	log.Println("Starting Service Provider ...")
-	log.Printf("EntityID: %s\n", entityID)
+	log.Println("starting Service Provider ...")
+	log.Printf("entityID: %s\n", entityID)
 	log.Printf("IDPMetaDataURL: %s\n", idpMetaDataURL)
-	log.Printf("Listening on %s\n", serviceURL)
-	log.Printf("Serving content from %s\n", contentDir)
+	log.Printf("listening on %s\n", serviceURL)
+	log.Printf("serving content from %s\n", contentDir)
 	fs := http.FileServer(http.Dir(contentDir))
 
-	http.Handle("/", samlSP.RequireAccount(fs))
-	http.Handle("/saml/", samlSP)
-	http.ListenAndServe(fmt.Sprintf(":%s", servingPort), nil)
+	if fastHTTP {
+		log.Println("using fasthttp ...")
+		// convert net/http handler to fasthttp request handler
+		requestHandler := fasthttpadaptor.NewFastHTTPHandler(samlSP.RequireAccount(fs))
+		fasthttp.ListenAndServe(fmt.Sprintf(":%s", servingPort), requestHandler)
+	} else {
+		log.Println("using net/http ...")
+		http.Handle("/", samlSP.RequireAccount(fs))
+		http.Handle("/saml/", samlSP)
+		http.ListenAndServe(fmt.Sprintf(":%s", servingPort), nil)
+	}
 }
 
 func initVars() error {
@@ -147,7 +123,49 @@ func initVars() error {
 	if len(servingPort) == 0 {
 		servingPort = types.DefaultServingPort
 	}
+	// Check wether to use fastHTTP instead of net/http
+	flag.BoolVar(&fastHTTP, "fasthttp", false, "use fasthttp instead of net/http")
+	flag.Parse()
 	return nil
+}
+
+func setVarsOrFail() {
+	if len(certSecretName) > 0 && len(keySecretName) > 0 {
+		log.Println("using cert/key from secret manager")
+		certBytes, err := getSecret(certSecretName)
+		if err != nil {
+			log.Fatalf("failed to get secret from secret manager: %+v", err)
+			os.Exit(1)
+		}
+		keyBytes, err := getSecret(keySecretName)
+		if err != nil {
+			log.Fatalf("failed to get key secret from secret manager: %+v", err)
+			os.Exit(1)
+		}
+		keyPair, err = tls.X509KeyPair(certBytes, keyBytes)
+		if err != nil {
+			log.Fatalf("failed to load key pair: %+v", err)
+			os.Exit(1)
+		}
+		keyPair.Leaf, err = x509.ParseCertificate(keyPair.Certificate[0])
+		if err != nil {
+			log.Fatalf("failed to parse certificate: %+v", err)
+			os.Exit(1)
+		}
+	} else {
+		log.Println("using cert/key from disk")
+		var err error
+		keyPair, err = tls.LoadX509KeyPair(certFile, keyFile)
+		if err != nil {
+			log.Fatalf("failed to load key pair: %+v", err)
+			os.Exit(1)
+		}
+		keyPair.Leaf, err = x509.ParseCertificate(keyPair.Certificate[0])
+		if err != nil {
+			log.Fatalf("failed to parse certificate: %+v", err)
+			os.Exit(1)
+		}
+	}
 }
 
 func getSecret(name string) ([]byte, error) {

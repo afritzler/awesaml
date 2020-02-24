@@ -63,6 +63,12 @@ source source_me
 awesaml
 ```
 
+In case you want to use [fasthttp](https://github.com/valyala/fasthttp) instead of [net/http](https://golang.org/pkg/net/http/) you can run
+
+```shell script
+awesaml --fasthttp
+```
+
 You should now be able to access your SAML SSO secured web content here <http://localhost:8000>.
 
 # Acknowledgements
