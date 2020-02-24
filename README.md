@@ -63,12 +63,6 @@ source source_me
 awesaml
 ```
 
-In case you want to use [fasthttp](https://github.com/valyala/fasthttp) instead of [net/http](https://golang.org/pkg/net/http/) you can run
-
-```shell script
-awesaml --fasthttp
-```
-
 You should now be able to access your SAML SSO secured web content here <http://localhost:8000>.
 
 # Acknowledgements
@@ -76,4 +70,3 @@ You should now be able to access your SAML SSO secured web content here <http://
 AweSAML is build on the shoulders of giatns and leverages the following modules under the hood
 
 * [crewjam/saml](https://github.com/crewjam/saml) module for the heavy lifting of the SAML flow
-* [fasthttp](https://github.com/valyala/fasthttp) as a possible alternative to `net/http`

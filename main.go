@@ -12,11 +12,8 @@ import (
 	"net/url"
 	"os"
 
-	"github.com/afritzler/awesaml/pkg/types"
-	"github.com/valyala/fasthttp"
-	"github.com/valyala/fasthttp/fasthttpadaptor"
-
 	secretmanager "cloud.google.com/go/secretmanager/apiv1beta1"
+	"github.com/afritzler/awesaml/pkg/types"
 	"github.com/crewjam/saml/samlsp"
 	secretmanagerpb "google.golang.org/genproto/googleapis/cloud/secretmanager/v1beta1"
 )
@@ -75,17 +72,10 @@ func main() {
 	log.Printf("serving content from %s\n", contentDir)
 	fs := http.FileServer(http.Dir(contentDir))
 
-	if fastHTTP {
-		log.Println("using fasthttp ...")
-		// convert net/http handler to fasthttp request handler
-		requestHandler := fasthttpadaptor.NewFastHTTPHandler(samlSP.RequireAccount(fs))
-		fasthttp.ListenAndServe(fmt.Sprintf(":%s", servingPort), requestHandler)
-	} else {
-		log.Println("using net/http ...")
-		http.Handle("/", samlSP.RequireAccount(fs))
-		http.Handle("/saml/", samlSP)
-		http.ListenAndServe(fmt.Sprintf(":%s", servingPort), nil)
-	}
+	log.Println("using net/http ...")
+	http.Handle("/", samlSP.RequireAccount(fs))
+	http.Handle("/saml/acs", samlSP)
+	http.ListenAndServe(fmt.Sprintf(":%s", servingPort), nil)
 }
 
 func initVars() error {
