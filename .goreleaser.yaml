@@ -1,0 +1,45 @@
+before:
+    hooks:
+      #- go mod download
+  builds:
+    -
+      id: "hello-world"
+      dir: .
+      main: main.go
+      binary: hello
+      ldflags:
+        - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser
+      env:
+        - CGO_ENABLED=0
+      goos:
+        - linux
+        - darwin
+        #- freebsd
+        - windows
+      goarch:
+        - amd64
+        - 386
+        - arm
+        - arm64
+      goarm:
+        - 6
+        - 7
+      ignore:
+        - goos: darwin
+          goarch: 386
+    
+  archives:
+  - 
+    format: binary
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+  
+  checksum:
+    name_template: 'checksums.txt'
+  snapshot:
+    name_template: "{{ .Tag }}-next"
+  changelog:
+    sort: asc
+    filters:
+      exclude:
+      - '^docs:'
+      - '^test:'
