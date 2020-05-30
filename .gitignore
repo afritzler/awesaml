@@ -22,3 +22,4 @@ public/
 .idea/
 .vscode/
 source_me
+dist/
