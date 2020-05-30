@@ -16,6 +16,14 @@ The easiest way to install AweSAML is to `go get` it into your Go bin `PATH`.
 go get -u github.com/afritzler/awesaml
 ```
 
+Or you can fetch the latest binary release via
+
+```shell script
+curl -L -o awesaml "https://github.com/afritzler/awesaml/releases/download/v0.1.0/awesaml_linux_amd64" && chmod +x awesaml
+```
+
+All release build can be found in the release section [here](https://github.com/afritzler/awesaml/releases).
+
 ### Build locally from source
 
 AweSAML is build using [go modules](https://github.com/golang/go/wiki/Modules). Make sure to set `GO111MODULE=on` before continuing.
