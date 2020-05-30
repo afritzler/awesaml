@@ -3,10 +3,10 @@ before:
       #- go mod download
   builds:
     -
-      id: "hello-world"
+      id: "awesaml"
       dir: .
       main: main.go
-      binary: hello
+      binary: awesaml
       ldflags:
         - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser
       env:
