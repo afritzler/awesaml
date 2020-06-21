@@ -17,7 +17,8 @@
 // Package secretmanager is an auto-generated package for the
 // Secret Manager API.
 //
-// Stores, manages, and secures access to application secrets.
+// Stores sensitive data such as API keys, passwords, and certificates.
+// Provides convenience while improving security.
 //
 //   NOTE: This package is in beta. It is not stable, and may be subject to changes.
 //
@@ -39,10 +40,16 @@ import (
 	"strings"
 	"unicode"
 
+	"google.golang.org/api/option"
 	"google.golang.org/grpc/metadata"
 )
 
-const versionClient = "20200212"
+// For more information on implementing a client constructor hook, see
+// https://github.com/googleapis/google-cloud-go/wiki/Customizing-constructors.
+type clientHookParams struct{}
+type clientHook func(context.Context, clientHookParams) ([]option.ClientOption, error)
+
+const versionClient = "20200608"
 
 func insertMetadata(ctx context.Context, mds ...metadata.MD) context.Context {
 	out, _ := metadata.FromOutgoingContext(ctx)
