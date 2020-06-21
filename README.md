@@ -19,7 +19,7 @@ go get -u github.com/afritzler/awesaml
 Or you can fetch the latest binary release via
 
 ```shell script
-curl -L -o awesaml "https://github.com/afritzler/awesaml/releases/download/v0.1.0/awesaml_$(uname)_amd64" && chmod +x awesaml
+curl -L -o awesaml "https://github.com/afritzler/awesaml/releases/download/v0.1.1/awesaml_$(uname)_amd64" && chmod +x awesaml
 ```
 
 All release build can be found in the release section [here](https://github.com/afritzler/awesaml/releases).
