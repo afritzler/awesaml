@@ -2,6 +2,8 @@ name: goreleaser
 
 on:
   pull_request:
+    paths:
+    - '!**.md'
     types: [ assigned, opened, synchronize, reopened ]
 
 jobs:
