@@ -1,9 +1,7 @@
-name: goreleaser
+name: goreleaser-test-build
 
 on:
   pull_request:
-    paths:
-    - '!**.md'
     types: [ assigned, opened, synchronize, reopened ]
 
 jobs:

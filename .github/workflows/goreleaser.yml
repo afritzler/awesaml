@@ -2,8 +2,6 @@ name: goreleaser
 
 on:
   push:
-    paths:
-    - '!**.md'
     tags:
       - '*'
 

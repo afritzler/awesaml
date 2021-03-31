@@ -1,8 +1,6 @@
 on:
   pull_request:
     types: [ assigned, opened, synchronize, reopened ]
-    paths:
-    - '!**.md'
 
 name: Pull Request Unit Test
 
