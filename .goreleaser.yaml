@@ -28,13 +28,7 @@ builds:
     goarch: 386
 
 archives:
--
-  format: binary
-  name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
-  replacements:
-    darwin: Darwin
-    linux: Linux
-    windows: Windows
+- format: binary
 
 checksum:
   name_template: 'checksums.txt'
