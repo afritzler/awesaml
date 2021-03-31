@@ -26,9 +26,9 @@ builds:
   ignore:
   - goos: darwin
     goarch: 386
-    
+
 archives:
-- 
+-
   format: binary
   name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
   replacements:
@@ -41,8 +41,4 @@ checksum:
 snapshot:
   name_template: "{{ .Tag }}-next"
 changelog:
-  sort: asc
-  filters:
-    exclude:
-    - '^docs:'
-    - '^test:'
+  skip: true
