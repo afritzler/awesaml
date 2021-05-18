@@ -3,7 +3,7 @@ module github.com/afritzler/awesaml
 go 1.16
 
 require (
-	cloud.google.com/go v0.81.0
+	cloud.google.com/go v0.82.0
 	github.com/crewjam/saml v0.4.5
-	google.golang.org/genproto v0.0.0-20210402141018-6c239bbf2bb1
+	google.golang.org/genproto v0.0.0-20210517163617-5e0236093d7a
 )
