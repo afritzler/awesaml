@@ -9,7 +9,7 @@ jobs:
     name: run
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
     - name: run
       uses: cedrickring/golang-action@1.7.0
