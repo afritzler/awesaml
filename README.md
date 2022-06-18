@@ -4,7 +4,7 @@
 
 # AweSAML
 
-> "You said all I need is configuring my IDP to enable SSO!!!"
+> "You said all I need to do, is configuring my IDP to enable SSO!!!"
 
 ![saml](images/logo.png)
 
