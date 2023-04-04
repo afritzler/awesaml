@@ -1,4 +1,4 @@
-package types
+package utils
 
 const (
 	DefaultServingPort    = "8000"

@@ -6,6 +6,8 @@ GOGET=$(GOCMD) get
 BINARY_NAME=awesaml
 
 all: test build
+lint:
+	golangci-lint run ./...
 build:
 	$(GOBUILD) -o $(BINARY_NAME) -v
 test:

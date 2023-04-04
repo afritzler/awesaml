@@ -1,0 +1,40 @@
+run:
+  concurrency: 4
+  timeout: 5m
+
+linters:
+  enable:
+    - revive
+    - ineffassign
+    - misspell
+    - goimports
+    - importas
+    - unused
+
+severity:
+  default-severity: error
+
+linters-settings:
+  misspell:
+    ignore-words:
+      - strat
+  revive:
+    severity: error
+    rules:
+      - name: exported
+        arguments:
+          - disableStutteringCheck
+      - name: if-return
+        disabled: true
+  importas:
+    alias:
+      - pkg: github.com/onmetal/onmetal-api/api/(\w+)/(v[\w\d]+)
+        alias: $1$2
+      - pkg: github.com/onmetal/onmetal-api/internal/apis/(\w+)
+        alias: $1
+      - pkg: github.com/onmetal/onmetal-api/internal/client/(\w+)
+        alias: ${1}client
+
+issues:
+  exclude: # Exclude stutter issues (for now)
+    - "exported: type name will be used as (.+) by other packages, and that stutters; consider calling this (.+)"

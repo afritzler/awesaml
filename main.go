@@ -11,10 +11,10 @@ import (
 	"net/url"
 	"os"
 
-	secretmanager "cloud.google.com/go/secretmanager/apiv1beta1"
-	"github.com/afritzler/awesaml/pkg/types"
+	secretmanagerapiv1beta1 "cloud.google.com/go/secretmanager/apiv1beta1"
+	"github.com/afritzler/awesaml/pkg/utils"
 	"github.com/crewjam/saml/samlsp"
-	secretmanagerpb "google.golang.org/genproto/googleapis/cloud/secretmanager/v1beta1"
+	secretmanagerv1beta1 "google.golang.org/genproto/googleapis/cloud/secretmanager/v1beta1"
 )
 
 var (
@@ -73,43 +73,46 @@ func main() {
 	log.Println("using net/http ...")
 	http.Handle("/", samlSP.RequireAccount(fs))
 	http.Handle("/saml/acs", samlSP)
-	http.ListenAndServe(fmt.Sprintf(":%s", servingPort), nil)
+	if err := http.ListenAndServe(fmt.Sprintf(":%s", servingPort), nil); err != nil {
+		log.Fatalf("failed to listen and serve: %+v", err)
+		os.Exit(1)
+	}
 }
 
 func initVars() error {
-	entityID = os.Getenv(types.EntityIDEnvName)
+	entityID = os.Getenv(utils.EntityIDEnvName)
 	if len(entityID) == 0 {
-		return fmt.Errorf("you need to provide the entityID by exporting it via the following env var %s", types.EntityIDEnvName)
+		return fmt.Errorf("you need to provide the entityID by exporting it via the following env var %s", utils.EntityIDEnvName)
 	}
-	certFile = os.Getenv(types.CertFileEnvName)
+	certFile = os.Getenv(utils.CertFileEnvName)
 	if len(certFile) == 0 {
-		certSecretName = os.Getenv(types.CertSecretNameEnvName)
+		certSecretName = os.Getenv(utils.CertSecretNameEnvName)
 		if len(certSecretName) == 0 {
-			return fmt.Errorf(fmt.Sprintf("you need to provide either a location of the cert file via %s or cert secret name via %s", types.CertFileEnvName, types.CertSecretNameEnvName))
+			return fmt.Errorf(fmt.Sprintf("you need to provide either a location of the cert file via %s or cert secret name via %s", utils.CertFileEnvName, utils.CertSecretNameEnvName))
 		}
 	}
-	keyFile = os.Getenv(types.KeyFileEnvName)
+	keyFile = os.Getenv(utils.KeyFileEnvName)
 	if len(keyFile) == 0 {
-		keySecretName = os.Getenv(types.KeySecretNameEnvName)
+		keySecretName = os.Getenv(utils.KeySecretNameEnvName)
 		if len(keySecretName) == 0 {
-			return fmt.Errorf(fmt.Sprintf("you need to provide either a location of the key file via %s or key secret name via %s", types.KeyFileEnvName, types.KeySecretNameEnvName))
+			return fmt.Errorf(fmt.Sprintf("you need to provide either a location of the key file via %s or key secret name via %s", utils.KeyFileEnvName, utils.KeySecretNameEnvName))
 		}
 	}
-	serviceURL = os.Getenv(types.ServiceURLEnvName)
+	serviceURL = os.Getenv(utils.ServiceURLEnvName)
 	if len(serviceURL) == 0 {
-		return fmt.Errorf(fmt.Sprintf("you need to provide the serviceURL by exporting it via the following env var %s", types.ServiceURLEnvName))
+		return fmt.Errorf(fmt.Sprintf("you need to provide the serviceURL by exporting it via the following env var %s", utils.ServiceURLEnvName))
 	}
-	idpMetaDataURL = os.Getenv(types.IdpMetaDataURLEnvName)
+	idpMetaDataURL = os.Getenv(utils.IdpMetaDataURLEnvName)
 	if len(idpMetaDataURL) == 0 {
-		return fmt.Errorf(fmt.Sprintf("you need to provide the idpMetaDataURL by exporting it via the following env var %s", types.IdpMetaDataURLEnvName))
+		return fmt.Errorf(fmt.Sprintf("you need to provide the idpMetaDataURL by exporting it via the following env var %s", utils.IdpMetaDataURLEnvName))
 	}
-	contentDir = os.Getenv(types.ContentDirEnvName)
+	contentDir = os.Getenv(utils.ContentDirEnvName)
 	if len(contentDir) == 0 {
-		return fmt.Errorf(fmt.Sprintf("you need to provide the contentDir by exporting it via the following env var %s", types.ContentDirEnvName))
+		return fmt.Errorf(fmt.Sprintf("you need to provide the contentDir by exporting it via the following env var %s", utils.ContentDirEnvName))
 	}
-	servingPort = os.Getenv(types.ServingPortEnvName)
+	servingPort = os.Getenv(utils.ServingPortEnvName)
 	if len(servingPort) == 0 {
-		servingPort = types.DefaultServingPort
+		servingPort = utils.DefaultServingPort
 	}
 	return nil
 }
@@ -159,13 +162,13 @@ func getSecret(name string) ([]byte, error) {
 
 	// Create the client.
 	ctx := context.Background()
-	client, err := secretmanager.NewClient(ctx)
+	client, err := secretmanagerapiv1beta1.NewClient(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create secretmanager client: %v", err)
 	}
 
 	// Build the request.
-	req := &secretmanagerpb.AccessSecretVersionRequest{
+	req := &secretmanagerv1beta1.AccessSecretVersionRequest{
 		Name: name,
 	}
 

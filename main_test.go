@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/afritzler/awesaml/pkg/types"
+	"github.com/afritzler/awesaml/pkg/utils"
 )
 
 func TestInitVarsNoEnv(t *testing.T) {
@@ -15,17 +15,17 @@ func TestInitVarsNoEnv(t *testing.T) {
 }
 
 var testEnvs = map[string]string{
-	types.EntityIDEnvName: "myEntityID",
-	types.CertFileEnvName: "myservice.cert",
-	types.KeyFileEnvName: "myservice.key",
-	types.ServiceURLEnvName: "http://localhost:8000",
-	types.IdpMetaDataURLEnvName: "http://myAwesomeIDP/saml2/metadata",
-	types.ContentDirEnvName: "public",
-	types.ServingPortEnvName: "8080",
+	utils.EntityIDEnvName:       "myEntityID",
+	utils.CertFileEnvName:       "myservice.cert",
+	utils.KeyFileEnvName:        "myservice.key",
+	utils.ServiceURLEnvName:     "http://localhost:8000",
+	utils.IdpMetaDataURLEnvName: "http://myAwesomeIDP/saml2/metadata",
+	utils.ContentDirEnvName:     "public",
+	utils.ServingPortEnvName:    "8080",
 }
 
 func TestInitVarsWithEnvs(t *testing.T) {
-	for env, value := range testEnvs{
+	for env, value := range testEnvs {
 		os.Setenv(env, value)
 	}
 	err := initVars()
@@ -33,11 +33,11 @@ func TestInitVarsWithEnvs(t *testing.T) {
 		t.Errorf("%s", err)
 		return
 	}
-	if entityID != testEnvs[types.EntityIDEnvName] {
+	if entityID != testEnvs[utils.EntityIDEnvName] {
 		t.Error("myEntityID is not set")
 		return
 	}
-	if certFile != testEnvs[types.CertFileEnvName] {
+	if certFile != testEnvs[utils.CertFileEnvName] {
 		t.Error("certFile is not set")
 		return
 	}
@@ -45,19 +45,19 @@ func TestInitVarsWithEnvs(t *testing.T) {
 		t.Error("certSecretName should not be set")
 		return
 	}
-	if serviceURL != testEnvs[types.ServiceURLEnvName]{
+	if serviceURL != testEnvs[utils.ServiceURLEnvName] {
 		t.Error("serviceURL is not set")
 		return
 	}
-	if idpMetaDataURL != testEnvs[types.IdpMetaDataURLEnvName]{
+	if idpMetaDataURL != testEnvs[utils.IdpMetaDataURLEnvName] {
 		t.Error("idpMetaDataURL is not set")
 		return
 	}
-	if contentDir != testEnvs[types.ContentDirEnvName]{
+	if contentDir != testEnvs[utils.ContentDirEnvName] {
 		t.Error("contentDir is not set")
 		return
 	}
-	if servingPort != testEnvs[types.ServingPortEnvName]{
+	if servingPort != testEnvs[utils.ServingPortEnvName] {
 		t.Error("servingPort is not set")
 		return
 	}
