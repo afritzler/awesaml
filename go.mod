@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	cloud.google.com/go/secretmanager v1.5.0
-	github.com/crewjam/saml v0.4.13
+	github.com/crewjam/saml v0.4.14
 	google.golang.org/genproto v0.0.0-20220617124728-180714bec0ad
 )
 
@@ -23,7 +23,7 @@ require (
 	github.com/jonboulle/clockwork v0.2.2 // indirect
 	github.com/mattermost/xml-roundtrip-validator v0.1.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/russellhaering/goxmldsig v1.2.0 // indirect
+	github.com/russellhaering/goxmldsig v1.3.0 // indirect
 	go.opencensus.io v0.23.0 // indirect
 	golang.org/x/crypto v0.14.0 // indirect
 	golang.org/x/net v0.17.0 // indirect
